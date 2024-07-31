@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { fetchOrderDetails, fetchOrders, createOrder } from '../helper/api'
+import { fetchOrderDetails, fetchOrders, createOrder, fetchOrgId } from '../helper/api'
 
 /**
  * @typedef {Object} Metafield
@@ -105,9 +105,20 @@ export const useOrderStore = defineStore('order', {
   state: () => ({
     orders: [],
     orderDetails: null,
-    error: null
+    error: null,
+    orgId: null,
   }),
   actions: {
+    async fetchOrgId() {
+      try {
+        this.orgId = await fetchOrgId();
+        this.error = null
+      } catch (error) {
+        console.error('Failed to fetch orders:', error)
+        this.error = 'Failed to fetch orders. Please try again.'
+        throw error
+      }
+    },
     async fetchOrders(orgId) {
       try {
         this.orders = await fetchOrders(orgId)
