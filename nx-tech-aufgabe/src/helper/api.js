@@ -5,30 +5,6 @@ const NX_TOKEN =
 
 const ORG_ID = 'iATitCyb1'
 
-const DebugPayload ={
-  "orgId": "iATitCyb1",
-  "name": "testing123",
-  "order": {
-      "name": "testing",
-      "duedate": "2019-08-24",
-      "pickupdate": "2019-08-24",
-      "contactperson": "user@example.com",
-      "watcher": "user224@example.com",
-      "lang": "string",
-      "recipient": "user22@example.com",
-      "salutation": "string",
-      "reminder": "disabled",
-      "unique": "string",
-      "uniquemodus": "error",
-      "metafields": [],
-      "customer": {},
-      "vehicle": {},
-      "invoice": [],
-      "draft": false,
-      "tags": [],
-      "binaryattachment": []
-  }
-}
 
 /**
  * Fetch orders by org ID.
@@ -66,7 +42,7 @@ export async function createOrder(orderPayload) {
 
   const response = await axios.post(
     'https://partnerapi.staging.bezahl.de/nxt/v1/order/plan',
-    DebugPayload,
+    payloadWithOrgId,
     {
       headers: {
         'NX-Token': NX_TOKEN,
