@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
-import OrderDetails from '@/components/OrderDetails.vue';  // Pfad anpassen
+import OrderDetails from '../components/OrderDetails';
 
 describe('OrderDetails.vue', () => {
   const order = {

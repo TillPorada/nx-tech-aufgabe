@@ -35,21 +35,27 @@
             <v-list-item>
               <v-icon>mdi-eye</v-icon>
               <v-list-item-title>Beobachter</v-list-item-title>
-              <v-list-item-subtitle>{{ order.watchers.length ? order.watchers.join(', ') : 'Keine' }}</v-list-item-subtitle>
+              <v-list-item-subtitle>{{
+                order.watchers.length ? order.watchers.join(', ') : 'Keine'
+              }}</v-list-item-subtitle>
             </v-list-item>
           </v-col>
           <v-col cols="6" sm="4" md="3">
             <v-list-item>
               <v-icon>mdi-email</v-icon>
               <v-list-item-title>Empfänger</v-list-item-title>
-              <v-list-item-subtitle>{{ order.recipient.length ? order.recipient.join(', ') : 'Keine' }}</v-list-item-subtitle>
+              <v-list-item-subtitle>{{
+                order.recipient.length ? order.recipient.join(', ') : 'Keine'
+              }}</v-list-item-subtitle>
             </v-list-item>
           </v-col>
           <v-col cols="6" sm="4" md="3">
             <v-list-item>
               <v-icon>mdi-car</v-icon>
               <v-list-item-title>Händler</v-list-item-title>
-              <v-list-item-subtitle>{{ order.organization?.name || 'Nicht angegeben' }}</v-list-item-subtitle>
+              <v-list-item-subtitle>{{
+                order.organization?.name || 'Nicht angegeben'
+              }}</v-list-item-subtitle>
             </v-list-item>
           </v-col>
           <v-col cols="6" sm="4" md="3">
@@ -64,7 +70,11 @@
               <v-icon>mdi-bank</v-icon>
               <v-list-item-title>Bankkonto</v-list-item-title>
               <v-list-item-subtitle>
-                {{ order.organization?.bankaccounts.length ? order.organization.bankaccounts.map(acc => acc.iban).join(', ') : 'Nicht angegeben' }}
+                {{
+                  order.organization?.bankaccounts.length
+                    ? order.organization.bankaccounts.map((acc) => acc.iban).join(', ')
+                    : 'Nicht angegeben'
+                }}
               </v-list-item-subtitle>
             </v-list-item>
           </v-col>
@@ -85,24 +95,24 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps } from 'vue'
 
 const props = defineProps({
   order: {
     type: Object,
     default: null
   }
-});
+})
 
 const formatDate = (dateString) => {
-  if (!dateString) return 'Nicht angegeben';
-  const date = new Date(dateString);
-  return date.toLocaleDateString('de-DE');
-};
+  if (!dateString) return 'Nicht angegeben'
+  const date = new Date(dateString)
+  return date.toLocaleDateString('de-DE')
+}
 
 const formatPrice = (price) => {
-  return price ? `${price.toFixed(2)} €` : 'Nicht angegeben';
-};
+  return price ? `${price.toFixed(2)} €` : 'Nicht angegeben'
+}
 </script>
 
 <style scoped>

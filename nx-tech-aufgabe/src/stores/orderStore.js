@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia';
-import { fetchOrderDetails, fetchOrders, createOrder } from '../helper/api';
+import { defineStore } from 'pinia'
+import { fetchOrderDetails, fetchOrders, createOrder } from '../helper/api'
 
 /**
  * @typedef {Object} Metafield
@@ -110,35 +110,35 @@ export const useOrderStore = defineStore('order', {
   actions: {
     async fetchOrders(orgId) {
       try {
-        this.orders = await fetchOrders(orgId);
-        this.error = null;
+        this.orders = await fetchOrders(orgId)
+        this.error = null
       } catch (error) {
-        console.error('Failed to fetch orders:', error);
-        this.error = 'Failed to fetch orders. Please try again.';
-        throw error;
+        console.error('Failed to fetch orders:', error)
+        this.error = 'Failed to fetch orders. Please try again.'
+        throw error
       }
     },
     async fetchOrderDetails(orderId) {
       try {
-        this.orderDetails = await fetchOrderDetails(orderId);
-        this.error = null;
+        this.orderDetails = await fetchOrderDetails(orderId)
+        this.error = null
       } catch (error) {
-        this.error = 'Failed to fetch order details. Please try again.';
-        console.error('Failed to fetch order details:', error);
-        throw error;
+        this.error = 'Failed to fetch order details. Please try again.'
+        console.error('Failed to fetch order details:', error)
+        throw error
       }
     },
     async createOrder(orderPayload) {
       try {
-        const response = await createOrder(orderPayload);
-        this.error = null;
-        await this.fetchOrders(orderPayload.orgId); // Refresh the order list
-        return response;
+        const response = await createOrder(orderPayload)
+        this.error = null
+        await this.fetchOrders(orderPayload.orgId)
+        return response
       } catch (error) {
-        console.error('Failed to create order:', error);
-        this.error = 'Failed to create order. Please try again.';
-        throw error;
+        console.error('Failed to create order:', error)
+        this.error = 'Failed to create order. Please try again.'
+        throw error
       }
-    },
-  },
-});
+    }
+  }
+})

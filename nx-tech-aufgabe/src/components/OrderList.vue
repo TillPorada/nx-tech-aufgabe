@@ -27,37 +27,40 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
-import { useOrderStore } from '../stores/orderStore';
+import { ref, computed, onMounted, watch } from 'vue'
+import { useOrderStore } from '../stores/orderStore'
 
-const orderStore = useOrderStore();
-const orders = ref([]);
-const currentPage = ref(1);
-const itemsPerPage = ref(5);
+const orderStore = useOrderStore()
+const orders = ref([])
+const currentPage = ref(1)
+const itemsPerPage = ref(5)
 
-const emit = defineEmits(['order-selected']);
+const emit = defineEmits(['order-selected'])
 
 onMounted(() => {
-  orders.value = orderStore.orders.list || [];
-});
+  orders.value = orderStore.orders.list || []
+})
 
-watch(() => orderStore.orders.list, (newOrders) => {
-  orders.value = newOrders || [];
-});
+watch(
+  () => orderStore.orders.list,
+  (newOrders) => {
+    orders.value = newOrders || []
+  }
+)
 
 const filteredOrders = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage.value;
-  const end = start + itemsPerPage.value;
-  return orders.value.slice(start, end);
-});
+  const start = (currentPage.value - 1) * itemsPerPage.value
+  const end = start + itemsPerPage.value
+  return orders.value.slice(start, end)
+})
 
 const totalPages = computed(() => {
-  return Math.ceil((orders.value.length || 0) / itemsPerPage.value);
-});
+  return Math.ceil((orders.value.length || 0) / itemsPerPage.value)
+})
 
 const selectOrder = (order) => {
-  emit('order-selected', order);
-};
+  emit('order-selected', order)
+}
 </script>
 
 <style scoped>
