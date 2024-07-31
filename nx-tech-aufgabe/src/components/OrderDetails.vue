@@ -19,7 +19,7 @@
           </v-col>
           <v-col cols="6" sm="4" md="3">
             <v-list-item>
-              <v-icon>mdi-calendar-range</v-icon>
+              <v-icon>mdi-arrow-bottom-right</v-icon>
               <v-list-item-title>Referenz</v-list-item-title>
               <v-list-item-subtitle>{{ order.paymentdata?.reference }}</v-list-item-subtitle>
             </v-list-item>

@@ -121,7 +121,6 @@ export const useOrderStore = defineStore('order', {
     async fetchOrderDetails(orderId) {
       try {
         this.orderDetails = await fetchOrderDetails(orderId);
-        console.log("Updated Details");
         this.error = null;
       } catch (error) {
         this.error = 'Failed to fetch order details. Please try again.';

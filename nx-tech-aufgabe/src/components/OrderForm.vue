@@ -1,7 +1,6 @@
 <template>
   <v-container>
     <v-form ref="form" @submit.prevent="submitOrder">
-      <v-text-field v-model="order.orgId" label="Organisations-ID" required disabled></v-text-field>
       <v-text-field v-model="order.order.name" label="Name" required></v-text-field>
       <v-text-field
         v-model="order.order.duedate"
@@ -35,21 +34,29 @@
       <v-text-field v-model="order.order.uniquemodus" label="Unique Modus" required></v-text-field>
 
       <v-divider></v-divider>
-      Assets
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-text-field v-model="order.assets[0].label" label="Asset Label" required />
+      Zahlung hinzufügen
+      <v-row v-for="(asset, index) in order.assets" :key="index" class="align-center">
+        <v-col cols="12" md="5">
+          <v-text-field v-model="asset.label" label="Position" required />
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="5">
           <v-text-field
-            v-model="order.assets[0].amount"
-            label="Asset Amount"
+            v-model="asset.amount"
+            label="Preis"
             required
             type="number"
           />
         </v-col>
+        <v-col cols="12" md="2" class="d-flex align-center justify-end">
+          <v-btn icon small @click="addAsset" class="mr-2">
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+          <v-btn icon small @click="removeAsset(index)">
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
+        </v-col>
       </v-row>
-
+      
       <v-btn type="submit" color="primary">Bestellung aufgeben</v-btn>
     </v-form>
   </v-container>
@@ -145,6 +152,18 @@ const formatDate = (date) => {
   const year = d.getFullYear()
   return `${year}-${month}-${day}`
 }
+
+const addAsset = () => {
+  order.value.assets.push({ label: '', amount: '0' });
+};
+
+const removeAsset = (index) => {
+  order.value.assets.splice(index, 1);
+};
 </script>
 
-<style scoped></style>
+<style scoped>
+.pa-4 {
+  padding: 16px;
+}
+</style>

@@ -25,7 +25,6 @@ export async function fetchOrderDetails(orderId) {
   const response = await axios.get(`https://partnerapi.staging.bezahl.de/nxt/v1/order/${orderId}`, {
     headers: { 'NX-Token': NX_TOKEN }
   })
-  console.log("Updated Details");
   return response.data
 }
 
