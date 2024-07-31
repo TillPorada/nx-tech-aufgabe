@@ -13,22 +13,22 @@
           <v-col cols="6" sm="4" md="3">
             <v-list-item>
               <v-icon>mdi-calendar-today</v-icon>
-              <v-list-item-title>Fälligkeitsdatum</v-list-item-title>
-              <v-list-item-subtitle>{{ formatDate(order.duedate) }}</v-list-item-subtitle>
+              <v-list-item-title>Erstellungsdatum</v-list-item-title>
+              <v-list-item-subtitle>{{ formatDate(order.createDate) }}</v-list-item-subtitle>
             </v-list-item>
           </v-col>
           <v-col cols="6" sm="4" md="3">
             <v-list-item>
               <v-icon>mdi-calendar-range</v-icon>
-              <v-list-item-title>Abholdatum</v-list-item-title>
-              <v-list-item-subtitle>{{ formatDate(order.pickupdate) }}</v-list-item-subtitle>
+              <v-list-item-title>Referenz</v-list-item-title>
+              <v-list-item-subtitle>{{ order.paymentdata?.reference }}</v-list-item-subtitle>
             </v-list-item>
           </v-col>
           <v-col cols="6" sm="4" md="3">
             <v-list-item>
-              <v-icon>mdi-account</v-icon>
-              <v-list-item-title>Kontaktperson</v-list-item-title>
-              <v-list-item-subtitle>{{ order.contactperson || 'Nicht angegeben' }}</v-list-item-subtitle>
+              <v-icon>mdi-clock</v-icon>
+              <v-list-item-title>Status</v-list-item-title>
+              <v-list-item-subtitle>{{ order.status || 'Nicht angegeben' }}</v-list-item-subtitle>
             </v-list-item>
           </v-col>
           <v-col cols="6" sm="4" md="3">
@@ -47,23 +47,16 @@
           </v-col>
           <v-col cols="6" sm="4" md="3">
             <v-list-item>
-              <v-icon>mdi-account-outline</v-icon>
-              <v-list-item-title>Anrede</v-list-item-title>
-              <v-list-item-subtitle>{{ order.salutation || 'Nicht angegeben' }}</v-list-item-subtitle>
-            </v-list-item>
-          </v-col>
-          <v-col cols="6" sm="4" md="3">
-            <v-list-item>
-              <v-icon>mdi-map-marker</v-icon>
-              <v-list-item-title>Ort</v-list-item-title>
-              <v-list-item-subtitle>{{ order.location || 'Nicht angegeben' }}</v-list-item-subtitle>
+              <v-icon>mdi-car</v-icon>
+              <v-list-item-title>Händler</v-list-item-title>
+              <v-list-item-subtitle>{{ order.organization?.name || 'Nicht angegeben' }}</v-list-item-subtitle>
             </v-list-item>
           </v-col>
           <v-col cols="6" sm="4" md="3">
             <v-list-item>
               <v-icon>mdi-cash</v-icon>
               <v-list-item-title>Preis</v-list-item-title>
-              <v-list-item-subtitle>{{ formatPrice(order.price) }}</v-list-item-subtitle>
+              <v-list-item-subtitle>{{ formatPrice(order.total) }}</v-list-item-subtitle>
             </v-list-item>
           </v-col>
           <v-col cols="6" sm="4" md="3">
