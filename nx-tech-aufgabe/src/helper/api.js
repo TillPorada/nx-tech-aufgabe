@@ -10,7 +10,7 @@ const ORG_ID = await fetchOrgId();
  * @returns {Promise<string>}
  */
 export async function fetchOrgId() {
-  const response = await axios.get('https://partnerapi.staging.bezahl.de/nxt/v1/user', {
+  const response = await axios.get('/api/nxt/v1/user', {
     headers: { 'NX-Token': NX_TOKEN, 'Content-Type': 'application/json' }
   })
   const { activeOrganization } = response.data
@@ -24,7 +24,7 @@ export async function fetchOrgId() {
  */
 export async function fetchOrders(orgId) {
   const response = await axios.get(
-    `https://partnerapi.staging.bezahl.de/nxt/v1/order?orgId=${ORG_ID}&limit=50`,
+    `/api/nxt/v1/order?orgId=${ORG_ID}&limit=50`,
     {
       headers: { 'NX-Token': NX_TOKEN, 'Content-Type': 'application/json' }
     }
@@ -38,7 +38,7 @@ export async function fetchOrders(orgId) {
  * @returns {Promise<Object>}
  */
 export async function fetchOrderDetails(orderId) {
-  const response = await axios.get(`https://partnerapi.staging.bezahl.de/nxt/v1/order/${orderId}`, {
+  const response = await axios.get(`/api/nxt/v1/order/${orderId}`, {
     headers: { 'NX-Token': NX_TOKEN }
   })
   return response.data
@@ -53,7 +53,7 @@ export async function createOrder(orderPayload) {
   const payloadWithOrgId = { ...orderPayload, orgId: ORG_ID }
 
   const response = await axios.post(
-    'https://partnerapi.staging.bezahl.de/nxt/v1/order',
+    '/api/nxt/v1/order',
     payloadWithOrgId,
     {
       headers: {
