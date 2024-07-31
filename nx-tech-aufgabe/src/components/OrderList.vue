@@ -1,4 +1,5 @@
 <template>
+  
   <v-list>
     <v-list-item v-if="!orders || orders.length === 0">
       <v-list-item-title>Keine Einträge vorhanden</v-list-item-title>
@@ -10,8 +11,8 @@
       class="order-item"
       v-else
     >
-      <v-list-item-title>ID: {{ order.id }}</v-list-item-title>
-      <v-list-item-subtitle>Name: {{ order.name }}</v-list-item-subtitle>
+      <v-list-item-title>Name: {{ order.name }}</v-list-item-title>
+      <v-list-item-subtitle>ID: {{ order.id }}</v-list-item-subtitle>
       <v-list-item-subtitle>Betrag: {{ order.total }} Euro</v-list-item-subtitle>
     </v-list-item>
   </v-list>

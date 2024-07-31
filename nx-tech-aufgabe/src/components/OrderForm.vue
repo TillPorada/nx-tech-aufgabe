@@ -118,6 +118,8 @@ const order = ref({
   ]
 })
 
+const emit = defineEmits(['order-submitted']);
+
 const submitOrder = async () => {
   if (form.value.validate()) {
     try {

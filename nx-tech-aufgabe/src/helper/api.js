@@ -1,8 +1,6 @@
 import axios from 'axios'
 
-const NX_TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im9ocU1NQ0xZRyIsImVtYWlsIjoidGlsbEBhZGFyb3AuZGUiLCJ1dWlkIjoiNTI2YWE4MTYtN2IwNi00MmM5LWEyZTUtZjAxOWI0NTU1MmY5IiwiaWF0IjoxNzIyMzUzNzcyLCJleHAiOjE3MjI0NDAxNzJ9.Xlt3OI4die4PZAeaXqk2Nko88yNdlnXwL2YAOXUj5XQ'
-
+const NX_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im9ocU1NQ0xZRyIsImVtYWlsIjoidGlsbEBhZGFyb3AuZGUiLCJ1dWlkIjoiOTA2NzliYTktZjI4YS00MTI1LTliNTEtNjcxMTE0NTQ0MmQzIiwiaWF0IjoxNzIyNDQzMDIzLCJleHAiOjE3MjUwMzUwMjN9.eaW6ciCTVNgE7xh09HY47GB-AhSuxle3irEaes-oU1c'
 const ORG_ID = 'iATitCyb1'
 
 
@@ -37,11 +35,11 @@ export async function fetchOrderDetails(orderId) {
  * @returns {Promise<Object>}
  */
 export async function createOrder(orderPayload) {
-  // Add orgId to the orderPayload
+
   const payloadWithOrgId = { ...orderPayload, orgId: ORG_ID }
 
   const response = await axios.post(
-    'https://partnerapi.staging.bezahl.de/nxt/v1/order/plan',
+    'https://partnerapi.staging.bezahl.de/nxt/v1/order',
     payloadWithOrgId,
     {
       headers: {

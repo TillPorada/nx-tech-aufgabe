@@ -16,7 +16,7 @@ const vuetify = createVuetify({
 })
 
 const options = {
-    // You can set your default options here
+    
 };
 
 const app = createApp(App)
