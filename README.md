@@ -1,7 +1,8 @@
 Der NX_TOKEN befindet sich in helper/api.js und ist 30 Tage gültig.
 Vite ist so konfiguriert das API-Calls über den localhost geproxyt werden um CORS Probleme zu vermeiden (siehe vite.config.js)
 
-Der genutzte Endpunkt zur Erstellung neuer Order ist zur Zeit /order . Der Endpunkt, welcher in den docs beschrieben wird "/order/plan" hat zu einem unbestimmten Validation Fehler geführt. In dem genutzten Frontend wird allerdings auch /order gebraucht. 
+Der genutzte Endpunkt zur Erstellung neuer Order ist zur Zeit /order . Der Endpunkt, welcher in den docs beschrieben wird "/order/plan" hat zu einem unbestimmten Validation Fehler geführt. In dem genutzten Frontend wird allerdings auch /order gebraucht.
+Sollte das nicht okay sein, kann ich das gerne nochmal versuchen zu ändern.
 
 Mögliche Verbesserungen ab hier:
 
