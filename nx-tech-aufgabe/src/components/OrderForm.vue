@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-form ref="form" @submit.prevent="submitOrder">
-      <v-text-field v-model="order.orgId" label="Organisations-ID" required></v-text-field>
+      <v-text-field v-model="order.orgId" label="Organisations-ID" required disabled></v-text-field>
       <v-text-field v-model="order.order.name" label="Name" required></v-text-field>
       <v-text-field
         v-model="order.order.duedate"
@@ -17,10 +17,10 @@
       ></v-text-field>
       <v-text-field
         v-model="order.order.contactperson"
-        label="Kontaktperson"
+        label="Kontaktperson Email"
         required
       ></v-text-field>
-      <v-text-field v-model="order.order.watcher" label="Beobachter" required></v-text-field>
+      <v-text-field v-model="order.order.watcher" label="Beobachter Email" required></v-text-field>
       <v-select
         v-model="order.order.lang"
         :items="languages"
@@ -30,7 +30,26 @@
       />
       <v-text-field v-model="order.order.recipient" label="Empfänger" required></v-text-field>
       <v-text-field v-model="order.order.salutation" label="Anrede" required></v-text-field>
-      <v-text-field v-model="order.order.location" label="Ort" required></v-text-field>
+      <v-text-field v-model="order.order.reminder" label="Reminder" required></v-text-field>
+      <v-text-field v-model="order.order.unique" label="Unique" required></v-text-field>
+      <v-text-field v-model="order.order.uniquemodus" label="Unique Modus" required></v-text-field>
+
+      <v-divider></v-divider>
+      Assets
+      <v-row>
+        <v-col cols="12" md="6">
+          <v-text-field v-model="order.assets[0].label" label="Asset Label" required />
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            v-model="order.assets[0].amount"
+            label="Asset Amount"
+            required
+            type="number"
+          />
+        </v-col>
+      </v-row>
+
       <v-btn type="submit" color="primary">Bestellung aufgeben</v-btn>
     </v-form>
   </v-container>
@@ -39,136 +58,147 @@
 <script setup>
 import { ref } from 'vue'
 import { useOrderStore } from '../stores/orderStore'
+import { useToast } from 'vue-toastification'
 
+const toast = useToast()
 const orderStore = useOrderStore()
 const form = ref(null)
 
 const languages = [
-"Afrikaans",
-"Albanisch",
-"Amharisch",
-"Arabisch",
-"Armenisch",
-"Aserbaidschanisch",
-"Baskisch",
-"Bengalisch",
-"Birmanisch",
-"Bosnisch",
-"Bulgarisch",
-"Cebuano",
-"Chinesisch(traditionell)",
-"Chinesisch(vereinfacht)",
-"Dänisch",
-"Deutsch",
-"Englisch",
-"Esperanto",
-"Estnisch",
-"Filipino",
-"Finnisch",
-"Französisch",
-"Galizisch",
-"Georgisch",
-"Griechisch",
-"Gujarati",
-"Haiti-Kreolisch",
-"Haussa",
-"Hawaiisch",
-"Hebräisch",
-"Hindi",
-"Hmong",
-"Igbo",
-"Indonesisch",
-"Irisch",
-"Isländisch",
-"Italienisch",
-"Japanisch",
-"Javanisch",
-"Jiddisch",
-"Kannada",
-"Kasachisch",
-"Katalanisch",
-"Khmer",
-"Kirgisisch",
-"Koreanisch",
-"Korsisch",
-"Kroatisch",
-"Kurdisch",
-"Laotisch",
-"Latein",
-"Lettisch",
-"Litauisch",
-"Luxemburgisch",
-"Madagassisch",
-"Malaiisch",
-"Malayalam",
-"Maltesisch",
-"Maori",
-"Marathi",
-"Mazedonisch",
-"Mongolisch",
-"Nepalesisch",
-"Niederländisch",
-"Norwegisch",
-"Nyanja-Sprache",
-"Paschtu",
-"Persisch",
-"Polnisch",
-"Portugiesisch",
-"Punjabi",
-"Rumänisch",
-"Russisch",
-"Samoanisch",
-"Schottisches Gälisch",
-"Schwedisch",
-"Serbisch",
-"Shona",
-"Sindhi",
-"Singhalesisch",
-"Slowakisch",
-"Slowenisch",
-"Somali",
-"Spanisch",
-"Suaheli",
-"Sundanesisch",
-"Tadschikisch",
-"Tamil",
-"Telugu",
-"Thailändisch",
-"Tschechisch",
-"Türkisch",
-"Ukrainisch",
-"Ungarisch",
-"Urdu",
-"Usbekisch",
-"Vietnamesisch",
-"Walisisch",
-"Weißrussisch",
-"Westfriesisch",
-"Xhosa",
-"Yoruba",
-"Zulu"];
+  'Afrikaans',
+  'Albanisch',
+  'Amharisch',
+  'Arabisch',
+  'Armenisch',
+  'Aserbaidschanisch',
+  'Baskisch',
+  'Bengalisch',
+  'Birmanisch',
+  'Bosnisch',
+  'Bulgarisch',
+  'Cebuano',
+  'Chinesisch(traditionell)',
+  'Chinesisch(vereinfacht)',
+  'Dänisch',
+  'Deutsch',
+  'Englisch',
+  'Esperanto',
+  'Estnisch',
+  'Filipino',
+  'Finnisch',
+  'Französisch',
+  'Galizisch',
+  'Georgisch',
+  'Griechisch',
+  'Gujarati',
+  'Haiti-Kreolisch',
+  'Haussa',
+  'Hawaiisch',
+  'Hebräisch',
+  'Hindi',
+  'Hmong',
+  'Igbo',
+  'Indonesisch',
+  'Irisch',
+  'Isländisch',
+  'Italienisch',
+  'Japanisch',
+  'Javanisch',
+  'Jiddisch',
+  'Kannada',
+  'Kasachisch',
+  'Katalanisch',
+  'Khmer',
+  'Kirgisisch',
+  'Koreanisch',
+  'Korsisch',
+  'Kroatisch',
+  'Kurdisch',
+  'Laotisch',
+  'Latein',
+  'Lettisch',
+  'Litauisch',
+  'Luxemburgisch',
+  'Madagassisch',
+  'Malaiisch',
+  'Malayalam',
+  'Maltesisch',
+  'Maori',
+  'Marathi',
+  'Mazedonisch',
+  'Mongolisch',
+  'Nepalesisch',
+  'Niederländisch',
+  'Norwegisch',
+  'Nyanja-Sprache',
+  'Paschtu',
+  'Persisch',
+  'Polnisch',
+  'Portugiesisch',
+  'Punjabi',
+  'Rumänisch',
+  'Russisch',
+  'Samoanisch',
+  'Schottisches Gälisch',
+  'Schwedisch',
+  'Serbisch',
+  'Shona',
+  'Sindhi',
+  'Singhalesisch',
+  'Slowakisch',
+  'Slowenisch',
+  'Somali',
+  'Spanisch',
+  'Suaheli',
+  'Sundanesisch',
+  'Tadschikisch',
+  'Tamil',
+  'Telugu',
+  'Thailändisch',
+  'Tschechisch',
+  'Türkisch',
+  'Ukrainisch',
+  'Ungarisch',
+  'Urdu',
+  'Usbekisch',
+  'Vietnamesisch',
+  'Walisisch',
+  'Weißrussisch',
+  'Westfriesisch',
+  'Xhosa',
+  'Yoruba',
+  'Zulu'
+]
 
 const order = ref({
-  orgId: '',
+  orgId: 'iATitCyb1',
+  name: 'testing',
   order: {
     name: '',
     duedate: '',
     pickupdate: '',
     contactperson: '',
     watcher: '',
-    lang: '',
+    lang: 'string',
     recipient: '',
-    salutation: '',
+    salutation: 'string',
+    reminder: 'disabled',
+    unique: 'string',
+    uniquemodus: 'error',
     metafields: [],
     customer: {},
     vehicle: {},
     invoice: [],
     draft: false,
     tags: [],
-    location: '',
     binaryattachment: []
   },
-  assets: [{}]
+  assets: [
+    {
+      label: '',
+      amount: '0'
+    }
+  ]
 })
 
 const submitOrder = async () => {
@@ -181,8 +211,10 @@ const submitOrder = async () => {
       console.log(order.value)
       await orderStore.createOrder(order.value)
       emit('order-submitted')
+      toast.success('Bestellung erfolgreich aufgegeben!')
     } catch (error) {
-      console.log('Fehler beim Aufgeben der Bestellung')
+      console.log('Fehler beim Aufgeben der Bestellung', error)
+      toast.error('Fehler beim Aufgeben der Bestellung: ' + error.message)
     }
   }
 }

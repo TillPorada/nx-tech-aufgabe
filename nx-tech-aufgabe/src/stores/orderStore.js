@@ -104,29 +104,41 @@ import { fetchOrderDetails, fetchOrders, createOrder } from '../helper/api';
 export const useOrderStore = defineStore('order', {
   state: () => ({
     orders: [],
-    orderDetails: /** @type {Order|null} */ (null),
+    orderDetails: null,
+    error: null
   }),
   actions: {
-    async fetchOrders() {
+    async fetchOrders(orgId) {
       try {
-        this.orders = await fetchOrders();
+        this.orders = await fetchOrders(orgId);
+        this.error = null;
       } catch (error) {
         console.error('Failed to fetch orders:', error);
+        this.error = 'Failed to fetch orders. Please try again.';
+        throw error;
       }
     },
     async fetchOrderDetails(orderId) {
       try {
         this.orderDetails = await fetchOrderDetails(orderId);
+        console.log("Updated Details");
+        this.error = null;
       } catch (error) {
+        this.error = 'Failed to fetch order details. Please try again.';
         console.error('Failed to fetch order details:', error);
+        throw error;
       }
     },
     async createOrder(orderPayload) {
       try {
         const response = await createOrder(orderPayload);
+        this.error = null;
+        await this.fetchOrders(orderPayload.orgId); // Refresh the order list
         return response;
       } catch (error) {
         console.error('Failed to create order:', error);
+        this.error = 'Failed to create order. Please try again.';
+        throw error;
       }
     },
   },

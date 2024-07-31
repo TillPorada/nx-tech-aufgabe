@@ -40,7 +40,7 @@ import OrderDetails from '../components/OrderDetails.vue'
 import OrderList from '../components/OrderList.vue'
 
 const dialog = ref(false)
-const orderStore = useOrderStore()
+const orderStore = useOrderStore();
 
 onMounted(() => {
   orderStore.fetchOrders()

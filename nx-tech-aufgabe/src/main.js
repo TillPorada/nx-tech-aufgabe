@@ -7,14 +7,22 @@ import * as directives from 'vuetify/directives'
 
 import App from './App.vue'
 
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+
 const vuetify = createVuetify({
     components,
     directives,
 })
 
+const options = {
+    // You can set your default options here
+};
+
 const app = createApp(App)
 
 app.use(createPinia())
 app.use(vuetify)
+app.use(Toast, options);
 
 app.mount('#app')
